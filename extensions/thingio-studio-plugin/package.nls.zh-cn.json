@@ -33,6 +33,7 @@
   "thingio.label.output": "构建输出",
   "thingio.label.extension": "(未来扩展)",
   "thingio.label.projectPropertyIcon": "项目属性",
+  "thingio.label.upWebServer": "启动服务器",
   "thingio.view.resource.allProject": "全部项目",
   "thingio.view.resource.quickAccess": "快捷操作",
   "thingio.debug.view.external": "外围",

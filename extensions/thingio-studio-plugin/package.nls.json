@@ -33,6 +33,7 @@
   "thingio.label.output": "Build Output",
   "thingio.label.extension": "(Future Extension)",
   "thingio.label.projectPropertyIcon": "Project property",
+  "thingio.label.upWebServer": "Start the web server",
   "thingio.view.resource.allProject": "All Projects",
   "thingio.view.resource.quickAccess": "QuickAccess",
   "thingio.debug.view.external": "External",

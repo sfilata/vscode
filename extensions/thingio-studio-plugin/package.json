@@ -1,8 +1,8 @@
 {
 	"name": "thingio-studio",
-	"displayName": "thingIOStudio",
+	"displayName": "Thingio Studio",
 	"description": "The embedded studio for the RISC-V chip development.",
-	"version": "0.0.1-alpha.0",
+	"version": "0.1.0-alpha.2",
 	"keywords": [
 		"vscode",
 		"plugin",
@@ -193,7 +193,7 @@
 			}
 		],
 		"configuration": {
-			"title": "ThingioStudio",
+			"title": "Thingio Studio",
 			"type": "object",
 			"properties": {
 				"thingioStudio.common.thingioSdkPath": {
@@ -211,16 +211,14 @@
 				"thingioStudio.common.compiler": {
 					"description": "%thingio.settings.compiler.desc%",
 					"type": "string",
-					"default": "SCons",
+					"default": "tool-scons",
 					"enum": [
-						"SCons",
-						"GCC",
-						"Build"
+						"tool-scons",
+						"tool-scons@4.40400.0"
 					],
 					"enumDescriptions": [
-						"A compiler named Scons",
-						"A compiler named GCC",
-						"A compiler named Build"
+						"scons",
+						"scons@4.40400.0"
 					],
 					"markdownDescription": "%thingio.settings.compiler.markdownDesc%"
 				},
@@ -331,6 +329,10 @@
 				"command": "thingIOStudio.showMemory",
 				"title": "%thingio.label.showMemory%",
 				"icon": "media/refresh.png"
+			},
+			{
+				"command": "thingIOStudio.upWebServer",
+				"title": "%thingio.label.upWebServer%"
 			},
 			{
 				"category": "ThingIO Debug",
@@ -708,6 +710,6 @@
 	},
 	"__metadata": {
 		"isApplicationScoped": false,
-		"installedTimestamp": 1670996883746
+		"installedTimestamp": 1672389844868
 	}
 }

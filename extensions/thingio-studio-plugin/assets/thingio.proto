@@ -6,7 +6,9 @@ package thingio;
 
 service ThingIOCore {
   // 获取最近使用的platform
-  rpc ListRecentUsedPlatforms (EmptyRequest) returns (ListPlatformsReply) {}
+  rpc ListRecentUsedBoard (EmptyRequest) returns (ListRecentUsedBoardReply) {}
+  // 获取最近使用的platform
+  rpc ListRecentUsedPath (EmptyRequest) returns (ListRecentUsedPathReply) {}
   // 获取所有的platform列表和其下面所有支持的板子
   rpc ListPlatforms (ListPlatformsRequest) returns (ListPlatformsReply) {}
   // 获取某个platform下面的所有的version
@@ -33,7 +35,8 @@ service ThingIOCore {
   rpc GetPlatformTools(GetPlatformToolsRequest) returns (GetPlatformToolsResponse) {}
   // SDK 管理器左侧的菜单
   rpc GetPlatformsForSDKManager(EmptyRequest) returns (GetPlatformsForSDKManagerResponse) {}
-
+  // 获取系统变量
+  rpc GetThingioVariable(GetThingioVariableRequest) returns (GetThingioVariableResponse) {}
 }
 
 // 新建项目属性的可选值获取
@@ -106,6 +109,24 @@ message NewProjectReply {
 message ListPlatformsRequest {
   //  string name = 1; // 搜索关键字
   bool installOnly = 2; // 1: true, 0: false 仅仅显示已经安装工具集的平台
+}
+
+message ListRecentUsedBoardReply {
+  message RecentBoard {
+    string board = 1;
+    string platform = 2;
+    string boardName = 3;
+    string platformName = 4;
+  }
+  int32 code = 1; // 1, 成功， 2, 失败
+  string message = 2; //执行任务的结果, 文字描述
+  repeated RecentBoard boards = 3;
+}
+
+message ListRecentUsedPathReply {
+  int32 code = 1; // 1, 成功， 2, 失败
+  string message = 2; //执行任务的结果, 文字描述
+  repeated string paths = 3;
 }
 
 message  ListPlatformsReply {
@@ -294,6 +315,17 @@ message GetPlatformsForSDKManagerResponse {
 message SetActiveConfigRequest {
   string projectPath = 1;
   string config = 2; //需要设置的活动配置的名称
+}
+
+message GetThingioVariableRequest {
+  string id = 1; //传递需要获取的id
+  // 目前前端需要知道的是core_dir就是传递的sdk管理器所在的目录
+}
+
+message GetThingioVariableResponse {
+  int32 code = 1; //返回的状态
+  string message = 2; //code的描述
+  string value = 3;
 }
 
 //message JsonBean {

@@ -1,0 +1,33 @@
+name: Publish on VS Code Marketplace and Open-VSX
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  vscode:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Publish to Visual Studio Marketplace
+      uses: JCofman/vscodeaction@master
+      env:
+        PUBLISHER_TOKEN: ${{ secrets.VSCE_TOKEN }}
+      with:
+        args: publish -p $PUBLISHER_TOKEN
+
+  open_vsx:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16
+
+      - name: Publish to Open VSX Registry
+        uses: HaaLeo/publish-vscode-extension@v1
+        with:
+          pat: ${{ secrets.OPEN_VSX_TOKEN }}

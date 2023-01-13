@@ -259,7 +259,7 @@ const terminalConfiguration: IConfigurationNode = {
 		[TerminalSettingId.Scrollback]: {
 			description: localize('terminal.integrated.scrollback', "Controls the maximum amount of lines the terminal keeps in its buffer."),
 			type: 'number',
-			default: 1000
+			default: 5000
 		},
 		[TerminalSettingId.DetectLocale]: {
 			markdownDescription: localize('terminal.integrated.detectLocale', "Controls whether to detect and set the `$LANG` environment variable to a UTF-8 compliant option since VS Code's terminal only supports UTF-8 encoded data coming from the shell."),

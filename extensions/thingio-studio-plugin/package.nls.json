@@ -26,6 +26,7 @@
   "thingio.label.showMemory": "Show Memory",
   "thingio.label.openProject": "Open Project",
   "thingio.label.openWorkspace": "Open Workspace",
+  "thingio.label.removeFolderFromWorkspace": "Remove the Folder from the workspace",
   "thingio.label.environmentSetting": "Environment Setting",
   "thingio.label.selectPath": "Select Path",
   "thingio.label.resource": "Project Resource",
@@ -46,5 +47,6 @@
   "thingio.settings.defaultProjectPath.desc": "The default storage location for new projects",
   "thingio.settings.defaultProjectPath.markdownDesc": "The default storage location for new projects",
   "thingio.settings.compiler.desc": "Default build tool",
-  "thingio.settings.compiler.markdownDesc": "**Builder** - build tool used by default"
+  "thingio.settings.compiler.markdownDesc": "**Builder** - build tool used by default",
+  "thingio.tip.createNoworkspace": "请关闭当前项目或为当前项目保存工作区后继续"
 }

@@ -31,12 +31,16 @@ service ThingIOCore {
   rpc SaveProjectConfig(SaveProjectConfigRequest) returns (EmptyReply) {}
   // 项目属性的更改
   rpc SyncProjectSettings(stream SyncProjectSettingsRequest) returns (stream SyncProjectSettingsReply) {}
+  // 新建项目属性的更改
+  rpc SyncNewProjectSettings(stream SyncNewProjectSettingsRequest) returns (stream SyncNewProjectSettingsReply) {}
   // 平台工具链（是指全局的那个)和具体的某个工具链
   rpc GetPlatformTools(GetPlatformToolsRequest) returns (GetPlatformToolsResponse) {}
   // SDK 管理器左侧的菜单
   rpc GetPlatformsForSDKManager(EmptyRequest) returns (GetPlatformsForSDKManagerResponse) {}
   // 获取系统变量
   rpc GetThingioVariable(GetThingioVariableRequest) returns (GetThingioVariableResponse) {}
+  // 获取得到Command的绝对路径
+  rpc GetCommandPath(GetCommandPathRequest) returns (GetCommandPathResponse) {}
 }
 
 // 新建项目属性的可选值获取
@@ -81,8 +85,8 @@ message Option {
 // The request message containing the user's name.
 message NewProjectRequest {
   string name = 1; // 项目名称
-  string path = 2; // 位置
-  string existWorkspacePath = 15; // 如果在已有的工作区下面来创建， 传递这个参数，后续的3， 4参数无效
+  string path = 2; // 位置， 注意这个位置是不等同于项目的路径
+  string existWorkspacePath = 15; // 工作区的文件的绝对路径， 如果没有的话， 就是新建工作区， 传递这个参数，后续的4参数无效,
   string workspaceName = 3; //工作区名称, 为空的时候， 就是默认的
   int32 workspaceAndPathSameDir = 4; // 工作区和项目在同一个目录下, 1: true, 0: false, 默认false
   string sessionId = 5; // NewProjectProperties返回的session id
@@ -101,9 +105,11 @@ message NewProjectRequest {
 
 // The response message containing the greetings
 message NewProjectReply {
-  int32 code = 1; // 1, 成功， 2, 失败
+  int32 code = 1; // 1, 成功， 2, 失败 , 1001 新建项目目录名被文件占用, 1002 :新建项目目录非空
   string message = 2; //创建成功或者失败的描述
   string detail = 3; //细节
+  string projectPath = 4; //新建的项目的目录, 1001, 1002的错误情况下， 会传递这个， 方便提示用户
+  string workspacePath = 5; //工作区的文件的路径
 }
 
 message ListPlatformsRequest {
@@ -265,6 +271,7 @@ message  SyncProjectSettingsRequest {
   //  string groupId = 3; //分组的名称， 首次的时候传入有效
   string value = 4; // 当前的值的变化， 首次传入的时候， 为空即可， 先定为， 后面传入改变的值， 如果要清空，暂定输入为一个存空格的字符串
   int32 action = 5; // 0 就会默认的修改， 1 表示获取，会返回全部的表单内容和值
+  string options = 6; //传入的全局配置之类的值， 传入json字符串, 例如"{\"isSimple\": true}", 不用每次都传， 更新了传递就可以了
 }
 
 message SyncProjectSettingsReply {
@@ -273,6 +280,27 @@ message SyncProjectSettingsReply {
   string value = 3; // 双向同步的数据， 如果需要更改值， 或者首次传值， 会传入这个
   string form = 4; // 表单的相关数据， 如果表单发生了变化， 就返回表单变化后的结构
   string errors = 5; //验证表单出错的值，包含了曾经所有的出错的值， 每次都会返回相应的值
+}
+
+
+message SyncNewProjectSettingsRequest {
+  string value = 1; // 当前的值的变化， 首次传入的时候， 为空即可， 先定为， 后面传入改变的值， 如果要清空，暂定输入为一个存空格的字符串
+  int32 action = 2; // 0 就会默认的修改， 1 表示获取，会返回全部的表单内容和值
+  // 下面是首次传入的时候， 需要代入的参数， 其他时候， 更改无效也不需要反复传递
+  string platformId = 3; //新建项目属性的平台的版本号
+  string platformVersion = 4; //新建项目属性的平台的版本号
+  string boardId = 5; //选择的开发板的ID
+  string templateId = 6; //选择的模板的ID
+  string options = 7; //传入的全局配置之类的值， 传入json字符串
+}
+
+message SyncNewProjectSettingsReply {
+  int32 code = 1; //返回的状态
+  string message = 2; //code的描述
+  string value = 3; // 双向同步的数据， 如果需要更改值， 或者首次传值， 会传入这个
+  string form = 4; // 表单的相关数据， 如果表单发生了变化， 就返回表单变化后的结构
+  string errors = 5; //验证表单出错的值，包含了曾经所有的出错的值， 每次都会返回相应的值
+  string sessionId = 6; //当前的sessionID， 后续的创建项目用
 }
 
 message GetPlatformToolsRequest {
@@ -332,3 +360,15 @@ message GetThingioVariableResponse {
 //  string key = 1;
 //  google.protobuf.Any value = 2;
 //}
+message GetCommandPathRequest {
+  string projectPath = 1; // 工程目录
+  string configName = 2; // 配置的名称
+  string key = 3; // 命令的key接口， 目前可选值有 readelf
+}
+
+message GetCommandPathResponse {
+  int32 code = 1; //返回的状态
+  string message = 2; //code的描述
+  string path = 3;
+}
+

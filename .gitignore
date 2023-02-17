@@ -7,6 +7,7 @@ node_modules/
 extensions/**/dist/
 /out*/
 /extensions/**/out/
+extensions/thingio-studio-plugin/
 build/node_modules
 coverage/
 test_data/

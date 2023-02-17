@@ -176,13 +176,6 @@
 					"title": "Thingio Studio",
 					"icon": "media/icon.png"
 				}
-			],
-			"panel": [
-				{
-					"id": "thingioSerialMonitor",
-					"title": "%thingio.label.serialMonitor%",
-					"icon": "media/icon.png"
-				}
 			]
 		},
 		"viewsWelcome": [
@@ -226,6 +219,11 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Showing Welcome at startup"
+				},
+				"thingioStudio.common.isCommonfig": {
+					"type": "boolean",
+					"default": true,
+					"description": "Show the project property as a common mode or complex mode."
 				}
 			}
 		},
@@ -275,6 +273,10 @@
 				"command": "thingIOStudio.debug",
 				"title": "%thingio.label.debug%",
 				"icon": "media/debug.png"
+			},
+			{
+				"command": "thingIOStudio.removeFolderFromWorkspace",
+				"title": "%thingio.label.removeFolderFromWorkspace%"
 			},
 			{
 				"command": "thingIOStudio.rebuild",
@@ -510,6 +512,10 @@
 					"when": "view == thingioResourceMgmt && viewItem == projectNode"
 				},
 				{
+					"command": "thingIOStudio.removeFolderFromWorkspace",
+					"when": "view == thingioResourceMgmt && viewItem == projectNode"
+				},
+				{
 					"command": "thingIOStudio.rebuild",
 					"group": "navigation@2",
 					"when": "view == thingioResourceMgmt && viewItem == projectNode"
@@ -628,12 +634,6 @@
 					"name": "%thingio.view.resource.quickAccess%"
 				}
 			],
-			"thingioSerialMonitor": [
-				{
-					"id": "thingioSerial",
-					"name": "%thingio.label.serialMonitor%"
-				}
-			],
 			"debug": [
 				{
 					"id": "thingio-debug.memory",
@@ -676,7 +676,8 @@
 		"pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
 		"lint": "eslint src --ext ts",
 		"test": "node ./out/test/runTest.js",
-		"commit": "git-cz"
+		"commit": "git-cz",
+		"build": "vsce package --allow-star-activation"
 	},
 	"devDependencies": {
 		"@types/fs-extra": "^9.0.13",
@@ -710,6 +711,6 @@
 	},
 	"__metadata": {
 		"isApplicationScoped": false,
-		"installedTimestamp": 1672389844868
+		"installedTimestamp": 1676622859453
 	}
 }

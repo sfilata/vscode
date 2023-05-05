@@ -31,7 +31,9 @@ service ThingIOCore {
   rpc SaveProjectConfig(SaveProjectConfigRequest) returns (EmptyReply) {}
   // 项目属性的更改
   rpc SyncProjectSettings(stream SyncProjectSettingsRequest) returns (stream SyncProjectSettingsReply) {}
-  // 新建项目属性的更改
+  // 其他配置, 如工具属性
+  rpc SyncOtherSettings(stream SyncOtherSettingsRequest) returns (stream SyncOtherSettingsReply) {}
+   // 新建项目属性的更改
   rpc SyncNewProjectSettings(stream SyncNewProjectSettingsRequest) returns (stream SyncNewProjectSettingsReply) {}
   // 平台工具链（是指全局的那个)和具体的某个工具链
   rpc GetPlatformTools(GetPlatformToolsRequest) returns (GetPlatformToolsResponse) {}
@@ -41,6 +43,10 @@ service ThingIOCore {
   rpc GetThingioVariable(GetThingioVariableRequest) returns (GetThingioVariableResponse) {}
   // 获取得到Command的绝对路径
   rpc GetCommandPath(GetCommandPathRequest) returns (GetCommandPathResponse) {}
+  // 获取项目的属性， 针对前面使用流式接口， 此处提供了单独的读取的机会
+  rpc GetProjectProperties(GetProjectPropertiesRequest) returns (GetProjectPropertiesResponse) {}
+  // 修改项目的属性（主要是需要后端来处理的一些项目属性, 目前就一个属性需要支持， 就是设置项目的名称， 也就是重命名
+  rpc SetProjectProperties(SetProjectPropertiesRequest) returns (SetProjectPropertiesResponse) {}
 }
 
 // 新建项目属性的可选值获取
@@ -83,10 +89,17 @@ message Option {
 
 
 // The request message containing the user's name.
+///**
+// 关于工作区的情况， 分三种
+// 新建工作区：existProjectPaths==null && existWorkspacePath ==null
+// 组合为新的工作区： existProjectPaths!=null && existWorkspacePath ==null
+// 加入到现有的工作区：existWorkspacePath!=null
+// */
 message NewProjectRequest {
   string name = 1; // 项目名称
   string path = 2; // 位置， 注意这个位置是不等同于项目的路径
   string existWorkspacePath = 15; // 工作区的文件的绝对路径， 如果没有的话， 就是新建工作区， 传递这个参数，后续的4参数无效,
+  repeated string existProjectPaths = 17; // 已经存在的项目的路径
   string workspaceName = 3; //工作区名称, 为空的时候， 就是默认的
   int32 workspaceAndPathSameDir = 4; // 工作区和项目在同一个目录下, 1: true, 0: false, 默认false
   string sessionId = 5; // NewProjectProperties返回的session id
@@ -280,6 +293,25 @@ message SyncProjectSettingsReply {
   string value = 3; // 双向同步的数据， 如果需要更改值， 或者首次传值， 会传入这个
   string form = 4; // 表单的相关数据， 如果表单发生了变化， 就返回表单变化后的结构
   string errors = 5; //验证表单出错的值，包含了曾经所有的出错的值， 每次都会返回相应的值
+  string token = 9; //检查并发使用的
+}
+
+
+message  SyncOtherSettingsRequest {
+  string projectPath = 1; //目标项目的根目录， 首次的时候传入有效
+  // string configName = 2; //配置的id， 首次的时候传入有效,
+  string groupId = 3; //分组的名称， 首次的时候传入有效, 目前支持的工具属性有, "codeAnalysis", "docxygen"
+  string value = 4; // 当前的值的变化， 首次传入的时候， 为空即可， 先定为， 后面传入改变的值， 如果要清空，暂定输入为一个存空格的字符串
+  int32 action = 5; // 0 就会默认的修改， 1 表示获取，会返回全部的表单内容和值
+  string options = 6; //传入的全局配置之类的值， 传入json字符串, 例如"{\"isSimple\": true}", 不用每次都传， 更新了传递就可以了
+}
+
+message SyncOtherSettingsReply {
+  int32 code = 1; //返回的状态
+  string message = 2; //code的描述
+  string value = 3; // 双向同步的数据， 如果需要更改值， 或者首次传值， 会传入这个
+  string form = 4; // 表单的相关数据， 如果表单发生了变化， 就返回表单变化后的结构
+  string errors = 5; //验证表单出错的值，包含了曾经所有的出错的值， 每次都会返回相应的值
 }
 
 
@@ -370,5 +402,33 @@ message GetCommandPathResponse {
   int32 code = 1; //返回的状态
   string message = 2; //code的描述
   string path = 3;
+}
+
+message GetProjectPropertiesRequest {
+  string projectPath = 1; // 工程目录
+  string configName = 2; // 要修改的的配置的名称， 对于project_name来说， 这个参数忽略不传就可以， 其他情况下，需要传递此参数， 表示修改那个配置下的某个属性
+  string key = 3; // 要修改的属性， 目前支持[project_name]
+}
+
+message GetProjectPropertiesResponse {
+  int32 code = 1; //返回的状态
+  string message = 2; //code的描述
+  string value = 3; //如果需要，可以返回一个string的值
+  repeated string extras = 4; //如果需要，可以返回一个string的值
+}
+
+message SetProjectPropertiesRequest {
+  string projectPath = 1; // 工程目录
+  string configName = 2; // 要修改的的配置的名称， 对于project_name来说， 这个参数忽略不传就可以， 其他情况下，需要传递此参数， 表示修改那个配置下的某个属性
+  string key = 3; // 支持所有的项目属性的配置， key具体需要沟通后端人员
+  string value = 4; // 属性的值
+  repeated string extras = 5; //备用的
+}
+
+message SetProjectPropertiesResponse {
+  int32 code = 1; //返回的状态
+  string message = 2; //code的描述
+  string value = 3; //如果需要，可以返回一个string的值
+  repeated string extras = 4; //如果需要，可以返回一个string的值
 }
 

@@ -93,13 +93,17 @@
           }),
             (t.expandValue = function (e, t, s = '', c) {
               const p = () => {
-                  if ('"' !== (t = t.trim())[0] && "'" !== t[0]) {return '';}
+                  if ('"' !== (t = t.trim())[0] && "'" !== t[0]) {
+                    return '';
+                  }
                   let e = 1,
                     s = !0;
                   const r = t[0];
                   let i = t.substr(1),
                     n = !1;
-                  for (; s; ) {n ? (n = !1) : '\\' === i[0] ? (n = !0) : i[0] === r && (s = !1), (i = i.substr(1)), e++;}
+                  for (; s; ) {
+                    n ? (n = !1) : '\\' === i[0] ? (n = !0) : i[0] === r && (s = !1), (i = i.substr(1)), e++;
+                  }
                   const o = t.substr(0, e).trim();
                   return (t = t.substr(e).trim()), o;
                 },
@@ -116,12 +120,18 @@
                 return (
                   m.push(e),
                   m.forEach((e) => {
-                    if (((s = ''), '' !== e))
-                      {if (e.startsWith('[')) {t += e;}
-                      else if (t) {
-                        for (; e.startsWith('*'); ) {(s += '*'), (e = e.substr(1));}
+                    if (((s = ''), '' !== e)) {
+                      if (e.startsWith('[')) {
+                        t += e;
+                      } else if (t) {
+                        for (; e.startsWith('*'); ) {
+                          (s += '*'), (e = e.substr(1));
+                        }
                         t = t + '.' + e;
-                      } else {t = e;}}
+                      } else {
+                        t = e;
+                      }
+                    }
                   }),
                   m.pop(),
                   s + t
@@ -133,10 +143,15 @@
                     ? p()
                     : '{' === t[0]
                     ? (() => {
-                        if ('{' !== (t = t.trim())[0]) {return;}
-                        if ('}' === (t = t.substr(1).trim())[0]) {return (t = t.substr(1).trim()), [];}
-                        if (t.startsWith('...') && '}' === (t = t.substr(3).trim())[0])
-                          {return (t = t.substr(1).trim()), '<...>';}
+                        if ('{' !== (t = t.trim())[0]) {
+                          return;
+                        }
+                        if ('}' === (t = t.substr(1).trim())[0]) {
+                          return (t = t.substr(1).trim()), [];
+                        }
+                        if (t.startsWith('...') && '}' === (t = t.substr(3).trim())[0]) {
+                          return (t = t.substr(1).trim()), '<...>';
+                        }
                         const e = t.indexOf('='),
                           s = t.indexOf('{'),
                           r = t.indexOf(',');
@@ -159,7 +174,9 @@
                         let n = v(!0);
                         if (n) {
                           const e = [];
-                          for (e.push(n); (n = f(!0)); ) {e.push(n);}
+                          for (e.push(n); (n = f(!0)); ) {
+                            e.push(n);
+                          }
                           return (t = t.substr(1).trim()), e;
                         }
                       })()
@@ -189,7 +206,9 @@
                 (v = (e = !1) => {
                   t = t.trim();
                   const s = i.exec(t);
-                  if (!s) {return;}
+                  if (!s) {
+                    return;
+                  }
                   t = t.substr(s[0].length).trim();
                   const r = (R = s[1]);
                   e && m.push(R);
@@ -210,10 +229,14 @@
                   );
                 }),
                 (g = () => {
-                  if (',' === (t = t.trim())[0]) {return (t = t.substr(1).trim()), b();}
+                  if (',' === (t = t.trim())[0]) {
+                    return (t = t.substr(1).trim()), b();
+                  }
                 }),
                 (f = (e = !1) => {
-                  if (',' === (t = t.trim())[0]) {return (t = t.substr(1).trim()), v(e);}
+                  if (',' === (t = t.trim())[0]) {
+                    return (t = t.substr(1).trim()), v(e);
+                  }
                 }),
                 (t = t.trim()),
                 b()
@@ -342,7 +365,10 @@
               this.args.projectEnvName && s.push('-e', this.args.projectEnvName),
                 this.args.loadMode && s.push('--load-mode', this.args.loadMode),
                 s.push('--interface', 'gdb', '--interpreter=mi2', '-q'),
-                (this.miDebugger = new c.MI2(require('path').join(process.env.userProfile, './.thingio/python/Scripts/thingio.exe'), s)),
+                (this.miDebugger = new c.MI2(
+                  require('path').join(process.env.userProfile, './.thingio/python/Scripts/thingio.exe'),
+                  s
+                )),
                 this.initDebugger(),
                 (this.miDebugger.printCalls = !!this.args.showDevDebugOutput),
                 (this.miDebugger.debugOutput = !!this.args.showDevDebugOutput),
@@ -430,8 +456,8 @@
             }
             disassembleRequest(e, t) {
               return r(this, void 0, void 0, function* () {
-                if (t.function)
-                  {try {
+                if (t.function) {
+                  try {
                     const s = yield this.getDisassemblyForFunction(t.function, t.file);
                     (e.body = {
                       instructions: s.instructions,
@@ -443,12 +469,12 @@
                       this.sendResponse(e);
                   } catch (t) {
                     this.sendErrorResponse(e, 1, `Unable to disassemble: ${t.toString()}`);
-                  }}
-                else if (t.startAddress)
-                  {try {
+                  }
+                } else if (t.startAddress) {
+                  try {
                     let s = this.symbolTable.getFunctionAtAddress(t.startAddress);
-                    if (s)
-                      {(s = yield this.getDisassemblyForFunction(s.name, s.file)),
+                    if (s) {
+                      (s = yield this.getDisassemblyForFunction(s.name, s.file)),
                         (e.body = {
                           instructions: s.instructions,
                           name: s.name,
@@ -456,22 +482,28 @@
                           address: s.address,
                           length: s.length
                         }),
-                        this.sendResponse(e);}
-                    else {
+                        this.sendResponse(e);
+                    } else {
                       const s = yield this.getDisassemblyForAddresses(t.startAddress, t.length || 256);
                       (e.body = { instructions: s }), this.sendResponse(e);
                     }
                   } catch (t) {
                     this.sendErrorResponse(e, 1, `Unable to disassemble: ${t.toString()}`);
-                  }}
-                else {this.sendErrorResponse(e, 1, 'Unable to disassemble; invalid parameters.');}
+                  }
+                } else {
+                  this.sendErrorResponse(e, 1, 'Unable to disassemble; invalid parameters.');
+                }
               });
             }
             getDisassemblyForFunction(e, t) {
               return r(this, void 0, void 0, function* () {
                 const s = this.symbolTable.getFunctionByName(e, t);
-                if (!s) {throw new Error(`Unable to find function with name ${e}.`);}
-                if (s.instructions) {return s;}
+                if (!s) {
+                  throw new Error(`Unable to find function with name ${e}.`);
+                }
+                if (s.instructions) {
+                  return s;
+                }
                 const r = s.address,
                   i = s.address + s.length,
                   n = (yield this.miDebugger.sendCommand(
@@ -545,7 +577,9 @@
                         t
                       );
                     });
-                  } else {e.body = { error: 'Unable to parse response' };}
+                  } else {
+                    e.body = { error: 'Unable to parse response' };
+                  }
                   this.sendResponse(e);
                 },
                 (t) => {
@@ -562,7 +596,9 @@
                       'register-names' === e[0] && (s = e[1]);
                     }),
                       (e.body = s);
-                  } else {e.body = { error: t.resultRecords.results };}
+                  } else {
+                    e.body = { error: t.resultRecords.results };
+                  }
                   this.sendResponse(e);
                 },
                 (t) => {
@@ -653,7 +689,9 @@
               this.handleMsg('stderr', `Could not start debugger process > ${e.toString()}\n`), this.quitEvent();
             }
             setFunctionBreakPointsRequest(e, t) {
-              if (!t.breakpoints || !t.breakpoints.length) {return;}
+              if (!t.breakpoints || !t.breakpoints.length) {
+                return;
+              }
               const s = (s) =>
                   r(this, void 0, void 0, function* () {
                     const r = [];
@@ -716,8 +754,8 @@
                             );
                           }
                         });
-                      } else
-                        {t.breakpoints.forEach((e) => {
+                      } else {
+                        t.breakpoints.forEach((e) => {
                           s.push(
                             this.miDebugger.addBreakPoint({
                               file: t.source.path,
@@ -726,7 +764,8 @@
                               countCondition: e.hitCondition
                             })
                           );
-                        });}
+                        });
+                      }
                       const n = (yield Promise.all(s)).filter((e) => null !== e);
                       (e.body = {
                         breakpoints: n.map((e) => ({
@@ -755,7 +794,9 @@
             }
             threadsRequest(e) {
               return r(this, void 0, void 0, function* () {
-                if (!this.stopped) {return (e.body = { threads: [] }), void this.sendResponse(e);}
+                if (!this.stopped) {
+                  return (e.body = { threads: [] }), void this.sendResponse(e);
+                }
                 try {
                   const t = yield this.miDebugger.sendCommand('thread-list-ids'),
                     s = t.result('thread-ids').map((e) => parseInt(e[1])),
@@ -810,11 +851,14 @@
                         ) {
                           const n = (0, l.encodeDisassembly)(t.name, t.file);
                           r.push(new a.StackFrame(s, `${e.function}@${e.address}`, new a.Source(t.name, n), i, 0));
-                        } else {r.push(new a.StackFrame(s, e.function + '@' + e.address, null, e.line, 0));}
-                      } else
-                        {r.push(
+                        } else {
+                          r.push(new a.StackFrame(s, e.function + '@' + e.address, null, e.line, 0));
+                        }
+                      } else {
+                        r.push(
                           new a.StackFrame(s, e.function + '@' + e.address, new a.Source(e.fileName, i), e.line, 0)
-                        );}
+                        );
+                      }
                     } catch (t) {
                       r.push(new a.StackFrame(s, e.function + '@' + e.address, null, e.line, 0));
                     }
@@ -860,7 +904,9 @@
                   const e = this.variableHandlesReverse[t];
                   s = this.variableHandles.get(e);
                 } catch (r) {
-                  if (!(r instanceof u.MIError && 'Variable object not found' === r.message)) {throw r;}
+                  if (!(r instanceof u.MIError && 'Variable object not found' === r.message)) {
+                    throw r;
+                  }
                   {
                     s = yield this.miDebugger.varCreate(e, t);
                     const r = this.findOrCreateVariable(s);
@@ -876,8 +922,8 @@
                 let i;
                 try {
                   i = yield this.miDebugger.getStackVariables(e, t);
-                  for (const e of i)
-                    {try {
+                  for (const e of i) {
+                    try {
                       const t = `var_local_${e.name}`,
                         s = yield this.getVarObjByName(e.name, t);
                       r.push(s.toProtocolVariable());
@@ -887,7 +933,8 @@
                         value: `<${t}>`,
                         variablesReference: 0
                       });
-                    }}
+                    }
+                  }
                   (s.body = { variables: r }), this.sendResponse(s);
                 } catch (e) {
                   this.sendErrorResponse(s, 1, `Could not expand variable: ${e}`);
@@ -960,7 +1007,9 @@
             variablesRequest(e, t) {
               return r(this, void 0, void 0, function* () {
                 let s;
-                if (254 === t.variablesReference) {return this.globalVariablesRequest(e, t);}
+                if (254 === t.variablesReference) {
+                  return this.globalVariablesRequest(e, t);
+                }
                 if (t.variablesReference >= 256 && t.variablesReference < f) {
                   const s = 255 & t.variablesReference,
                     r = (65280 & t.variablesReference) >>> 8;
@@ -971,10 +1020,11 @@
                     r = (65280 & t.variablesReference) >>> 8;
                   return this.staticVariablesRequest(r, s, e, t);
                 }
-                if (((s = this.variableHandles.get(t.variablesReference)), 'string' === typeof s))
-                  {return this.variableMembersRequest(s, e, t);}
-                if ('object' === typeof s)
-                  {if (s instanceof u.VariableObject) {
+                if (((s = this.variableHandles.get(t.variablesReference)), 'string' === typeof s)) {
+                  return this.variableMembersRequest(s, e, t);
+                }
+                if ('object' === typeof s) {
+                  if (s instanceof u.VariableObject) {
                     const t = s;
                     let r;
                     try {
@@ -1012,53 +1062,64 @@
                                 t.name,
                                 r
                               );
-                              if (d)
-                                {if ('string' === typeof d) {
+                              if (d) {
+                                if ('string' === typeof d) {
                                   if ('<nullptr>' === d) {
-                                    if (!i) {return o();}
+                                    if (!i) {
+                                      return o();
+                                    }
                                     i = !1;
-                                  } else if ('"' !== d[0])
-                                    {return (
+                                  } else if ('"' !== d[0]) {
+                                    return (
                                       s.push({
                                         name: '[err]',
                                         value: d,
                                         variablesReference: 0
                                       }),
                                       o()
-                                    );}
+                                    );
+                                  }
                                   s.push({
                                     name: `[${n++}]`,
                                     value: d,
                                     variablesReference: 0
                                   }),
                                     a();
-                                } else
-                                  {s.push({
+                                } else {
+                                  s.push({
                                     name: '[err]',
                                     value: d,
                                     variablesReference: 0
                                   }),
-                                    o();}}
-                              else {this.sendErrorResponse(e, 15, 'Could not expand variable');}
+                                    o();
+                                }
+                              } else {
+                                this.sendErrorResponse(e, 15, 'Could not expand variable');
+                              }
                             } catch (t) {
                               this.sendErrorResponse(e, 14, `Could not expand variable: ${t}`);
                             }
                           });
                       a();
-                    } else
-                      {this.sendErrorResponse(
+                    } else {
+                      this.sendErrorResponse(
                         e,
                         13,
                         `Unimplemented variable request options: ${JSON.stringify(t.options)}`
-                      );}
-                  } else {(e.body = { variables: s }), this.sendResponse(e);}}
-                else {(e.body = { variables: [] }), this.sendResponse(e);}
+                      );
+                    }
+                  } else {
+                    (e.body = { variables: s }), this.sendResponse(e);
+                  }
+                } else {
+                  (e.body = { variables: [] }), this.sendResponse(e);
+                }
               });
             }
             evaluateRequest(e, t) {
               return r(this, void 0, void 0, function* () {
-                if ('watch' === t.context)
-                  {try {
+                if ('watch' === t.context) {
+                  try {
                     const s = `watch_${i.createHash('md5').update(t.expression).digest('hex')}}`,
                       r = yield this.getVarObjByName(t.expression, s);
                     (e.body = { result: r.value, variablesReference: r.id }), this.sendResponse(e);
@@ -1068,9 +1129,9 @@
                       variablesReference: 0
                     }),
                       this.sendErrorResponse(e, 7, t.toString());
-                  }}
-                else if ('hover' === t.context)
-                  {try {
+                  }
+                } else if ('hover' === t.context) {
+                  try {
                     const s = yield this.miDebugger.evalExpression(t.expression);
                     (e.body = {
                       variablesReference: 0,
@@ -1079,9 +1140,9 @@
                       this.sendResponse(e);
                   } catch (t) {
                     this.sendErrorResponse(e, 7, t.toString());
-                  }}
-                else
-                  {this.miDebugger.sendUserInput(t.expression).then(
+                  }
+                } else {
+                  this.miDebugger.sendUserInput(t.expression).then(
                     (t) => {
                       (e.body =
                         void 0 === t
@@ -1095,7 +1156,8 @@
                     (t) => {
                       this.sendErrorResponse(e, 8, t.toString());
                     }
-                  );}
+                  );
+                }
               });
             }
             setVariableRequest(e, t) {
@@ -1311,8 +1373,9 @@
             }
             onOutput(e) {
               (e = e.split('\n')).forEach((e) => {
-                if (c(e)) {u.exec(e) || this.log('stdout', e);}
-                else {
+                if (c(e)) {
+                  u.exec(e) || this.log('stdout', e);
+                } else {
                   const t = (0, a.parseMI)(e);
                   this.debugOutput && this.log('log', 'GDB -> App: ' + JSON.stringify(t));
                   let s = !1;
@@ -1325,18 +1388,19 @@
                       this.log('stderr', t.result('msg') || e),
                     t.outOfBandRecord &&
                       (t.outOfBandRecord.forEach((e) => {
-                        if (e.isStream)
-                          {e.content.includes('ThingIO: Initialization completed') &&
+                        if (e.isStream) {
+                          e.content.includes('ThingIO: Initialization completed') &&
                             ((this.debugReadyTimeout = setTimeout(() => {
                               (this.debugReadyFired = !0), this.emit('debug-ready');
                             }, 200)),
                             this.once('generic-stopped', () => {
                               this.debugReadyFired || (clearTimeout(this.debugReadyTimeout), this.emit('debug-ready'));
                             })),
-                            this.log(e.type, e.content);}
-                        else if ('exec' === e.type)
-                          {if ((this.emit('exec-async-output', t), 'running' === e.asyncClass)) {this.emit('running', t);}
-                          else if ('stopped' === e.asyncClass) {
+                            this.log(e.type, e.content);
+                        } else if ('exec' === e.type) {
+                          if ((this.emit('exec-async-output', t), 'running' === e.asyncClass)) {
+                            this.emit('running', t);
+                          } else if ('stopped' === e.asyncClass) {
                             const e = t.record('reason');
                             'breakpoint-hit' === e
                               ? this.emit('breakpoint', t)
@@ -1355,9 +1419,11 @@
                                   this.log('console', 'Not implemented stop reason (assuming exception): ' + e),
                                 this.emit('stopped', t)),
                               this.emit('generic-stopped', t);
-                          } else {this.log('log', JSON.stringify(t));}}
-                        else if ('notify' === e.type)
-                          {if ('thread-created' === e.asyncClass) {
+                          } else {
+                            this.log('log', JSON.stringify(t));
+                          }
+                        } else if ('notify' === e.type) {
+                          if ('thread-created' === e.asyncClass) {
                             const e = t.result('id'),
                               s = t.result('group-id');
                             this.emit('thread-created', {
@@ -1374,7 +1440,8 @@
                           } else if ('thread-selected' === e.asyncClass) {
                             const e = t.result('id');
                             this.emit('thread-selected', { threadId: e });
-                          }}
+                          }
+                        }
                       }),
                       (s = !0)),
                     void 0 === t.token && void 0 === t.resultRecords && 0 === t.outOfBandRecord.length && (s = !0),
@@ -1465,9 +1532,10 @@
             addBreakPoint(e) {
               return new Promise((t, s) => {
                 let r = '';
-                if (e.countCondition)
-                  {if ('>' === e.countCondition[0]) {r += '-i ' + h.exec(e.countCondition.substr(1))[0] + ' ';}
-                  else {
+                if (e.countCondition) {
+                  if ('>' === e.countCondition[0]) {
+                    r += '-i ' + h.exec(e.countCondition.substr(1))[0] + ' ';
+                  } else {
                     const t = h.exec(e.countCondition)[0];
                     t.length !== e.countCondition.length
                       ? (this.log(
@@ -1478,7 +1546,8 @@
                         ),
                         (r += '-t '))
                       : 0 !== parseInt(t) && (r += '-t -i ' + parseInt(t) + ' ');
-                  }}
+                  }
+                }
                 e.raw ? (r += '*' + d(e.raw)) : (r += '"' + d(e.file) + ':' + e.line + '"'),
                   this.sendCommand(`break-insert ${r}`).then((r) => {
                     if ('done' === r.resultRecords.resultClass) {
@@ -1489,14 +1558,17 @@
                               'done' === s.resultRecords.resultClass ? t(e) : t(null);
                             }, s)
                           : t(e);
-                    } else {t(null);}
+                    } else {
+                      t(null);
+                    }
                   }, s);
               });
             }
             removeBreakpoints(e) {
               return new Promise((t, s) => {
-                if (0 === e.length) {t(!0);}
-                else {
+                if (0 === e.length) {
+                  t(!0);
+                } else {
                   const r = 'break-delete ' + e.join(' ');
                   this.sendCommand(r).then((e) => {
                     t('done' === e.resultRecords.resultClass);
@@ -1662,32 +1734,49 @@
               (this.token = e), (this.outOfBandRecord = t), (this.resultRecords = s);
             }
             static valueOf(e, t) {
-              if (!e) {return;}
+              if (!e) {
+                return;
+              }
               const s = /^\.?([a-zA-Z_\-][a-zA-Z0-9_\-]*)/,
                 r = /^\[(\d+)\](?:$|\.)/;
-              if (!(t = t.trim())) {return e;}
+              if (!(t = t.trim())) {
+                return e;
+              }
               let i = e;
               do {
                 let e = s.exec(t);
                 if (e) {
-                  if (((t = t.substr(e[0].length)), !i.length || 'string' === typeof i)) {return;}
+                  if (((t = t.substr(e[0].length)), !i.length || 'string' === typeof i)) {
+                    return;
+                  }
                   {
                     const t = [];
-                    for (const s of i) {s[0] === e[1] && t.push(s[1]);}
-                    if (t.length > 1) {i = t;}
-                    else {
-                      if (1 !== t.length) {return;}
+                    for (const s of i) {
+                      s[0] === e[1] && t.push(s[1]);
+                    }
+                    if (t.length > 1) {
+                      i = t;
+                    } else {
+                      if (1 !== t.length) {
+                        return;
+                      }
                       i = t[0];
                     }
                   }
-                } else if ('@' === t[0]) {(i = [i]), (t = t.substr(1));}
-                else {
-                  if (((e = r.exec(t)), !e)) {return;}
+                } else if ('@' === t[0]) {
+                  (i = [i]), (t = t.substr(1));
+                } else {
+                  if (((e = r.exec(t)), !e)) {
+                    return;
+                  }
                   {
                     t = t.substr(e[0].length);
                     const s = parseInt(e[1]);
-                    if (i.length && 'string' !== typeof i && s >= 0 && s < i.length) {i = i[s];}
-                    else if (0 !== s) {return;}
+                    if (i.length && 'string' !== typeof i && s >= 0 && s < i.length) {
+                      i = i[s];
+                    } else if (0 !== s) {
+                      return;
+                    }
                   }
                 }
                 t = t.trim();
@@ -1695,10 +1784,14 @@
               return i;
             }
             record(e) {
-              if (this.outOfBandRecord) {return r.valueOf(this.outOfBandRecord[0].output, e);}
+              if (this.outOfBandRecord) {
+                return r.valueOf(this.outOfBandRecord[0].output, e);
+              }
             }
             result(e) {
-              if (this.resultRecords) {return r.valueOf(this.resultRecords.results, e);}
+              if (this.resultRecords) {
+                return r.valueOf(this.resultRecords.results, e);
+              }
             }
           }
           t.MINode = r;
@@ -1714,22 +1807,28 @@
             const h = { '*': 'exec', '+': 'status', '=': 'notify' },
               c = { '~': 'console', '@': 'target', '&': 'log' },
               p = () => {
-                if ('"' !== e[0]) {return '';}
+                if ('"' !== e[0]) {
+                  return '';
+                }
                 let t,
                   r = 1,
                   i = !0,
                   n = e.substr(1),
                   o = !1;
-                for (; i; ) {o ? (o = !1) : '\\' === n[0] ? (o = !0) : '"' === n[0] && (i = !1), (n = n.substr(1)), r++;}
+                for (; i; ) {
+                  o ? (o = !1) : '\\' === n[0] ? (o = !0) : '"' === n[0] && (i = !1), (n = n.substr(1)), r++;
+                }
                 try {
                   t = (function (e) {
                     const t = Buffer.alloc(4 * e.length);
                     let r = 0;
-                    if ('"' !== e[0] || '"' !== e[e.length - 1]) {throw new Error('Not a valid string');}
+                    if ('"' !== e[0] || '"' !== e[e.length - 1]) {
+                      throw new Error('Not a valid string');
+                    }
                     e = e.slice(1, -1);
                     let i = !1;
-                    for (let n = 0; n < e.length; n++)
-                      {if (i) {
+                    for (let n = 0; n < e.length; n++) {
+                      if (i) {
                         let o;
                         '\\' === e[n]
                           ? (r += t.write('\\', r))
@@ -1755,11 +1854,15 @@
                           ? (t.writeUInt8(parseInt(o[0], 8), r++), (n += 2))
                           : (r += t.write(e[n], r)),
                           (i = !1);
-                      } else if ('\\' === e[n]) {i = !0;}
-                      else {
-                        if ('"' === e[n]) {throw new Error('Not a valid string');}
+                      } else if ('\\' === e[n]) {
+                        i = !0;
+                      } else {
+                        if ('"' === e[n]) {
+                          throw new Error('Not a valid string');
+                        }
                         r += t.write(e[n], r);
-                      }}
+                      }
+                    }
                     return t.slice(0, r).toString('utf8');
                   })(e.substr(0, r));
                 } catch (s) {
@@ -1774,21 +1877,29 @@
                   ? p()
                   : '{' === e[0] || '[' === e[0]
                   ? (() => {
-                      if ('{' !== e[0] && '[' !== e[0]) {return;}
+                      if ('{' !== e[0] && '[' !== e[0]) {
+                        return;
+                      }
                       const t = '[' === e[0];
-                      if ('}' === (e = e.substr(1))[0] || ']' === e[0]) {return (e = e.substr(1)), [];}
+                      if ('}' === (e = e.substr(1))[0] || ']' === e[0]) {
+                        return (e = e.substr(1)), [];
+                      }
                       if (t) {
                         let t = m();
                         if (t) {
                           const s = [];
-                          for (s.push(t); void 0 !== (t = f()); ) {s.push(t);}
+                          for (s.push(t); void 0 !== (t = f()); ) {
+                            s.push(t);
+                          }
                           return (e = e.substr(1)), s;
                         }
                       }
                       let s = g();
                       if (s) {
                         const t = [];
-                        for (t.push(s); (s = b()); ) {t.push(s);}
+                        for (t.push(s); (s = b()); ) {
+                          t.push(s);
+                        }
                         return (e = e.substr(1)), t;
                       }
                       e = (t ? '[' : '{') + e;
@@ -1796,13 +1907,19 @@
                   : void 0,
                 g = () => {
                   const t = a.exec(e);
-                  if (t) {return (e = e.substr(t[0].length + 1)), [t[1], m()];}
+                  if (t) {
+                    return (e = e.substr(t[0].length + 1)), [t[1], m()];
+                  }
                 },
                 f = () => {
-                  if (',' === e[0]) {return (e = e.substr(1)), m();}
+                  if (',' === e[0]) {
+                    return (e = e.substr(1)), m();
+                  }
                 },
                 b = () => {
-                  if (',' === e[0]) {return (e = e.substr(1)), g();}
+                  if (',' === e[0]) {
+                    return (e = e.substr(1)), g();
+                  }
                 };
               (v = i.exec(e));
 
@@ -1821,7 +1938,9 @@
                   output: []
                 };
                 let r;
-                for (; (r = b()); ) {s.output.push(r);}
+                for (; (r = b()); ) {
+                  s.output.push(r);
+                }
                 l.push(s);
               } else if (v[3]) {
                 const e = { isStream: !0, type: c[v[3]], content: p() };
@@ -1837,8 +1956,9 @@
                   u = { resultClass: v[2], results: [] };
                 (s = b());
 
-              )
-                {u.results.push(s);}
+              ) {
+                u.results.push(s);
+              }
               e = e.replace(o, '');
             }
             return new r(t, l || [], u);
@@ -1878,23 +1998,29 @@
                     (e = n.join(this.toolchainBinDir, t));
                 }),
                 !e)
-              )
-                {throw new Error('Could not find "objdump" program');}
+              ) {
+                throw new Error('Could not find "objdump" program');
+              }
               const t = r.spawnSync(e, ['--syms', this.executable]).stdout.toString().split('\n');
               let s = null;
               for (const e of t) {
                 const t = e.match(a);
-                if (!t) {continue;}
+                if (!t) {
+                  continue;
+                }
                 const r = l[t[8]],
                   i = u[t[2]];
                 let n = t[11].trim(),
                   h = !1;
-                if ('d' === t[7] && 'f' === t[8]) {s = n;}
-                else {
+                if ('d' === t[7] && 'f' === t[8]) {
+                  s = n;
+                } else {
                   n.startsWith('.hidden') && ((n = n.substring(7).trim()), (h = !0));
                   const e = n.match(d);
                   if (e) {
-                    if (r !== o.SymbolType.Function) {continue;}
+                    if (r !== o.SymbolType.Function) {
+                      continue;
+                    }
                     const t = parseInt(e[1]);
                     if (((n = e[2].substr(0, t)), e[2].length > t)) {
                       const s = e[2].substr(t).match(/^(\d+)(.+)$/);
@@ -1919,7 +2045,9 @@
               const t = this.symbols.filter(
                 (t) => t.type === o.SymbolType.Function && t.address <= e && t.address + t.length > e
               );
-              if (t && 0 !== t.length) {return t[0];}
+              if (t && 0 !== t.length) {
+                return t[0];
+              }
             }
             getFunctionSymbols() {
               return this.symbols.filter((e) => e.type === o.SymbolType.Function);
@@ -2001,22 +2129,30 @@
           function s(e, t) {
             let s = 0;
             const r = e + t - 1;
-            for (let t = e; t <= r; t++) {s = (s | (1 << t)) >>> 0;}
+            for (let t = e; t <= r; t++) {
+              s = (s | (1 << t)) >>> 0;
+            }
             return s;
           }
           Object.defineProperty(t, '__esModule', { value: !0 }),
             (t.encodeDisassembly = t.parseQuery = t.extractBits = t.createMask = t.binaryFormat = t.hexFormat = void 0),
             (t.hexFormat = function (e, t = 8, s = !0) {
               let r = e.toString(16);
-              for (; r.length < t; ) {r = '0' + r;}
+              for (; r.length < t; ) {
+                r = '0' + r;
+              }
               return s ? '0x' + r : r;
             }),
             (t.binaryFormat = function (e, t = 0, s = !0, r = !1) {
               let i = (e >>> 0).toString(2);
-              for (; i.length < t; ) {i = '0' + i;}
+              for (; i.length < t; ) {
+                i = '0' + i;
+              }
               if (r) {
                 const e = 4 - (i.length % 4);
-                for (let t = 0; t < e; t++) {i = '0' + i;}
+                for (let t = 0; t < e; t++) {
+                  i = '0' + i;
+                }
                 const t = i.match(/[01]{4}/g);
                 (i = t.join(' ')), (i = i.substring(e));
               }
@@ -2065,7 +2201,9 @@
       s = {};
     return (function e(r) {
       var i = s[r];
-      if (void 0 !== i) {return i.exports;}
+      if (void 0 !== i) {
+        return i.exports;
+      }
       var n = (s[r] = { exports: {} });
       return t[r].call(n.exports, n, n.exports, e), n.exports;
     })(789);

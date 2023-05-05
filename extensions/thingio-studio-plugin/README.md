@@ -1,56 +1,69 @@
-# ThingIO Studio Main VsCode extension
+# ThingIO Studio VsCode extension
 
-balalalla
+The vscode plugin project is used to realize the feature about the embedded, including the all the features except the topBar and some internal configuration.
 
-## Features
+## Getting Started
 
-The sidebar, debug panel, webview container.
+You should learn a little about the vscode extension to know the project better.
 
-## Requirements
+### Prerequisites
 
-Look at the document.
+- NodeJs
+- Vscode
 
-## Extension Settings
+### Installing
 
-Todos:
-Add the setting need to be noticed.
+1. Clone the project to the local.
 
-## Known Issues
+`git clone git@github.com:ThingIOstudio/thingio-plugin-main.git`
 
-None
+2. Install the dependencies.
 
-## Release Notes
+`yarn` or `npm install` or `pnpm install`
 
-### 1.0.0
+3. Run the debug and develop.
 
-Initial release of first version.
+## Running the tests
 
-### 1.0.1
+`yarn test`
 
-Fixed issue #.
+### Break down into end to end tests
 
-### 1.1.0
+Coming soon.
 
-Added features X, Y, and Z.
+### And coding style tests
 
------------------------------------------------------------------------------------------------------------
-## Following extension guidelines
+Coming soon.
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+## Deployment
 
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+Open the project using the vscode. And change the debug view and select `Run extension` option.
 
-## Working with Markdown
+## Built With
 
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
+* [vscode-vsce](https://github.com/microsoft/vscode-vsce) - The official build tool for the vscode extension.
 
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets
+## Contributing
 
-### For more information
+Please read [CONTRIBUTING.md](https://github.com/microsoft/vscode-vsce/blob/main/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+## Versioning
 
-**Enjoy!**
+The project is still under alpha development process. For the versions available, see the [tags on this repository](https://github.com/ThingIOstudio/thingio-plugin-main/tags).
+
+## Authors
+
+* **Shu BaiQiao** - *Initial work and main development* - [sfilata](https://github.com/sfilata)
+* **Zhang Yu** - *Web development and related feature* - [xiaoyugo](https://github.com/xiaoyugo)
+
+See also the list of [contributors](https://github.com/orgs/ThingIOstudio/people) who participated in this project.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details
+
+## Acknowledgments
+
+* TypeScript
+* Nodejs
+* Vscode Extension development knowledge

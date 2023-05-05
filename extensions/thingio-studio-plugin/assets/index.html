@@ -1,22 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thingio Home</title>
+  </head>
+  <body>
+    <!-- Message Transfer -->
+    <script>
+      var vscode = window.acquireVsCodeApi();
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ThingIO Home</title>
-  <!-- Message Transfer -->
-  <script src="https://cdn.jsdelivr.net/npm/thingio-message-helper@1.0.3/dist/index.umd.js"></script>
-  <script>
-    platfromMessageHelper.initVscodeIframe();
-  </script>
-  <!-- Message Transfer End -->
-</head>
+      var messageFun = function (e) {
+        if (['request', 'stream-request', 'command', 'write', 'client-end'].includes(e.data.command)) {
+          vscode.postMessage(e.data);
+        }
 
-<body>
-  <iframe id="home" name="home" src="{{ route }}" width="100%" height="100%" frameborder="0"
-    style="border: 0; left: 0; right: 0; bottom: 0; top: 0; position:absolute;" />
-</body>
+        if (['response', 'callback', 'error', 'data', 'end', 'status'].includes(e.data.command)) {
+          document.getElementById('home').contentWindow.postMessage(e.data, '*');
+        }
+      }
 
+      window.addEventListener('message', messageFun);
+    </script>
+    <!-- Message Transfer End -->
+    <iframe
+      id="home"
+      name="home"
+      src="{{ route }}"
+      width="100%"
+      height="100%"
+      frameborder="0"
+      style="border: 0; left: 0; right: 0; bottom: 0; top: 0; position: absolute"
+    />
+  </body>
 </html>

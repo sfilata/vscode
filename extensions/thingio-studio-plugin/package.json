@@ -8,7 +8,7 @@
 		"plugin",
 		"thingio"
 	],
-	"publisher": "changhongThingIO",
+	"publisher": "changhongThingio",
 	"repository": "https://code.changhong.com/baiqiao.shu/thingio-plugin-main.git",
 	"author": {
 		"name": "sfilata",
@@ -99,7 +99,7 @@
 					"c",
 					"cpp"
 				],
-				"label": "ThingIO Debugger",
+				"label": "Thingio Debugger",
 				"runtime": "node",
 				"configurationAttributes": {
 					"launch": {
@@ -125,7 +125,7 @@
 								]
 							},
 							"loadMode": {
-								"description": "Control when ThingIO should load debugging firmware to the end target (see docs for `debug_load_mode` option)",
+								"description": "Control when Thingio should load debugging firmware to the end target (see docs for `debug_load_mode` option)",
 								"default": null,
 								"type": [
 									"string",
@@ -151,7 +151,7 @@
 				},
 				"initialConfigurations": [
 					{
-						"name": "ThingIO Debugger",
+						"name": "Thingio Debugger",
 						"request": "launch",
 						"type": "thingio-debug",
 						"toolchainBinDir": "/usr/local/bin"
@@ -160,14 +160,14 @@
 				"configurationSnippets": [
 					{
 						"body": {
-							"name": "ThingIO Debugger",
+							"name": "Thingio Debugger",
 							"request": "launch",
 							"type": "thingio-debug",
 							"executable": ".pio/build/myenv/firmware.elf",
 							"toolchainBinDir": "/usr/local/bin"
 						},
-						"description": "ThingioIO Debugger",
-						"label": "ThingioIO Debugger"
+						"description": "Thingio Debugger",
+						"label": "Thingio Debugger"
 					}
 				]
 			}
@@ -335,6 +335,10 @@
 				"title": "%thingio.label.upWebServer%"
 			},
 			{
+				"command": "thingIOStudio.downWebServer",
+				"title": "%thingio.label.downWebServer%"
+			},
+			{
 				"command": "thingIOStudio.codeAnalysisStart",
 				"title": "%thingio.label.start%"
 			},
@@ -375,47 +379,47 @@
 				"title": "%thingio.label.delete%"
 			},
 			{
-				"category": "ThingIO Debug",
+				"category": "Thingio Debug",
 				"command": "thingio-debug.peripherals.updateNode",
 				"title": "Update Value"
 			},
 			{
-				"category": "ThingIO Debug",
+				"category": "Thingio Debug",
 				"command": "thingio-debug.peripherals.selectedNode",
 				"title": "Selected"
 			},
 			{
-				"category": "ThingIO Debug",
+				"category": "Thingio Debug",
 				"command": "thingio-debug.peripherals.copyValue",
 				"title": "Copy Value"
 			},
 			{
-				"category": "ThingIO Debug",
+				"category": "Thingio Debug",
 				"command": "thingio-debug.peripherals.setFormat",
 				"title": "Set Value Format"
 			},
 			{
-				"category": "ThingIO Debug",
+				"category": "Thingio Debug",
 				"command": "thingio-debug.registers.selectedNode",
 				"title": "Selected"
 			},
 			{
-				"category": "ThingIO Debug",
+				"category": "Thingio Debug",
 				"command": "thingio-debug.registers.copyValue",
 				"title": "Copy Value"
 			},
 			{
-				"category": "ThingIO Debug",
+				"category": "Thingio Debug",
 				"command": "thingio-debug.registers.setFormat",
 				"title": "Set Value Format"
 			},
 			{
-				"category": "ThingIO Debug",
+				"category": "Thingio Debug",
 				"command": "thingio-debug.memory.deleteHistoryItem",
 				"title": "%thingio.label.delete%"
 			},
 			{
-				"category": "ThingIO Debug",
+				"category": "Thingio Debug",
 				"command": "thingio-debug.memory.clearHistory",
 				"title": "Clear Memory View History",
 				"icon": {
@@ -424,7 +428,7 @@
 				}
 			},
 			{
-				"category": "ThingIO Debug",
+				"category": "Thingio Debug",
 				"command": "thingio-debug.examineMemory",
 				"title": " View Memory",
 				"icon": {
@@ -433,12 +437,12 @@
 				}
 			},
 			{
-				"category": "ThingIO Debug",
+				"category": "Thingio Debug",
 				"command": "thingio-debug.viewDisassembly",
 				"title": "View Disassembly (Function)"
 			},
 			{
-				"category": "ThingIO Debug",
+				"category": "Thingio Debug",
 				"command": "thingio-debug.setForceDisassembly",
 				"title": "Set Force Disassembly"
 			}
@@ -870,10 +874,10 @@
 		"lodash": "^4.17.21",
 		"path-browserify": "^1.0.1",
 		"platformio-vscode-debug": "^1.4.1",
-		"thingio-message-helper": "^1.1.2"
+		"thingio-message-helper": "^1.2.0"
 	},
 	"__metadata": {
 		"isApplicationScoped": false,
-		"installedTimestamp": 1682047852704
+		"installedTimestamp": 1683192529723
 	}
 }

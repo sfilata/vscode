@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 	<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
 		<Metadata>
-			<Identity Language="en-US" Id="thingio-studio" Version="0.1.0-alpha.2" Publisher="changhongThingIO" />
+			<Identity Language="en-US" Id="thingio-studio" Version="0.1.0-alpha.2" Publisher="changhongThingio" />
 			<DisplayName>Thingio Studio</DisplayName>
 			<Description xml:space="preserve">The embedded studio for the RISC-V chip development.</Description>
 			<Tags>vscode,plugin,thingio,keybindings,debuggers,thingio-debug.disassembly,Disassembly,__ext_dbgasm,thingio-debug.memoryview,Memory,__ext_dbgmem,thingio-debug.asm,Assembly,asm,__ext_asm,__ext_nasm,__ext_yasm,__ext_inc,__ext_s</Tags>

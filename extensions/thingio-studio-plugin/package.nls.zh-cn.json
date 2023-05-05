@@ -37,6 +37,7 @@
   "thingio.label.projectPropertyIcon": "项目属性",
   "thingio.label.utilsPropertyIcon": "工具属性",
   "thingio.label.upWebServer": "启动服务器",
+  "thingio.label.downWebServer": "停止服务器",
   "thingio.label.start": "立即开始",
   "thingio.label.setting": "设置",
   "thingio.label.newFile": "新建文件",

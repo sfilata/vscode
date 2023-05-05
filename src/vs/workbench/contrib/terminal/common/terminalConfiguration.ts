@@ -433,7 +433,7 @@ const terminalConfiguration: IConfigurationNode = {
 		[TerminalSettingId.WindowsEnableConpty]: {
 			description: localize('terminal.integrated.windowsEnableConpty', "Whether to use ConPTY for Windows terminal process communication (requires Windows 10 build number 18309+). Winpty will be used if this is false."),
 			type: 'boolean',
-			default: true
+			default: false
 		},
 		[TerminalSettingId.WordSeparators]: {
 			description: localize('terminal.integrated.wordSeparators', "A string containing all characters to be considered word separators by the double click to select word feature."),

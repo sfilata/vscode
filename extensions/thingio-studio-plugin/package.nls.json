@@ -37,6 +37,7 @@
   "thingio.label.projectPropertyIcon": "Project Properties",
   "thingio.label.utilsPropertyIcon": "Tool Properties",
   "thingio.label.upWebServer": "Start Server",
+  "thingio.label.downWebServer": "Abort Server",
   "thingio.label.start": "Start immediately",
   "thingio.label.setting": "Settings",
   "thingio.label.newFile": "New File",

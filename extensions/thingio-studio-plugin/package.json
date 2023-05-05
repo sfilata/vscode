@@ -1,0 +1,713 @@
+{
+	"name": "thingio-studio",
+	"displayName": "thingIOStudio",
+	"description": "The embedded studio for the RISC-V chip development.",
+	"version": "0.0.1-alpha.0",
+	"keywords": [
+		"vscode",
+		"plugin",
+		"thingio"
+	],
+	"publisher": "changhongThingIO",
+	"repository": "https://code.changhong.com/baiqiao.shu/thingio-plugin-main.git",
+	"author": {
+		"name": "sfilata",
+		"email": "baiqiao.shu@changhong.com",
+		"url": "http://shubaiqiao.com"
+	},
+	"engines": {
+		"vscode": "^1.69.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"*"
+	],
+	"main": "./dist/extension.js",
+	"contributes": {
+		"languages": [
+			{
+				"id": "thingio-debug.disassembly",
+				"aliases": [
+					"Disassembly"
+				],
+				"extensions": [
+					".dbgasm"
+				]
+			},
+			{
+				"id": "thingio-debug.memoryview",
+				"aliases": [
+					"Memory"
+				],
+				"extensions": [
+					".dbgmem"
+				]
+			},
+			{
+				"id": "thingio-debug.asm",
+				"aliases": [
+					"Assembly",
+					"asm"
+				],
+				"extensions": [
+					".asm",
+					".nasm",
+					".yasm",
+					".inc",
+					".s"
+				],
+				"configuration": "./syntaxes/assembly-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "thingio-debug.disassembly",
+				"scopeName": "source.thingio-debug-disassembly",
+				"path": "./syntaxes/thingio-debug-disassembly.json"
+			},
+			{
+				"language": "thingio-debug.memoryview",
+				"scopeName": "source.thingio-debug-memoryview",
+				"path": "./syntaxes/thingio-debug-memoryview.json"
+			},
+			{
+				"language": "thingio-debug.asm",
+				"scopeName": "source.thingio-debug-asm",
+				"path": "./syntaxes/assembly.tmLanguage"
+			}
+		],
+		"breakpoints": [
+			{
+				"language": "c"
+			},
+			{
+				"language": "cpp"
+			},
+			{
+				"language": "thingio-debug.asm"
+			},
+			{
+				"language": "thingio-debug.disassembly"
+			}
+		],
+		"debuggers": [
+			{
+				"configurationAttributes": {
+					"launch": {
+						"properties": {
+							"executable": {
+								"description": "Path of firmware or program",
+								"type": "string"
+							},
+							"toolchainBinDir": {
+								"description": "Path of toolchain binary directory",
+								"type": "string"
+							},
+							"projectEnvName": {
+								"description": "Working project environment",
+								"type": "string"
+							},
+							"svdPath": {
+								"default": null,
+								"description": "Path to an SVD file describing the peripherals of the microcontroller",
+								"type": [
+									"string",
+									"null"
+								]
+							},
+							"loadMode": {
+								"description": "Control when ThingIO should load debugging firmware to the end target (see docs for `debug_load_mode` option)",
+								"default": null,
+								"type": [
+									"string",
+									"null"
+								],
+								"enum": [
+									"always",
+									"modified",
+									"manual"
+								]
+							},
+							"showDevDebugOutput": {
+								"default": false,
+								"description": "Prints all GDB responses to the console",
+								"type": "boolean"
+							}
+						},
+						"required": [
+							"executable",
+							"toolchainBinDir"
+						]
+					}
+				},
+				"initialConfigurations": [
+					{
+						"name": "ThingIO Debugger",
+						"request": "launch",
+						"type": "thingio-debug",
+						"toolchainBinDir": "/usr/local/bin"
+					}
+				],
+				"configurationSnippets": [
+					{
+						"body": {
+							"name": "ThingIO Debugger",
+							"request": "launch",
+							"type": "thingio-debug",
+							"executable": ".pio/build/myenv/firmware.elf",
+							"toolchainBinDir": "/usr/local/bin"
+						},
+						"description": "ThingioIO Debugger",
+						"label": "ThingioIO Debugger"
+					}
+				],
+				"label": "ThingIO Debugger",
+				"program": "./bin/adapter.js",
+				"runtime": "node",
+				"type": "thingio-debug"
+			}
+		],
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "thingioEntry",
+					"title": "Thingio Studio",
+					"icon": "media/icon.png"
+				}
+			],
+			"panel": [
+				{
+					"id": "thingioSerialMonitor",
+					"title": "%thingio.label.serialMonitor%",
+					"icon": "media/icon.png"
+				}
+			]
+		},
+		"viewsWelcome": [
+			{
+				"view": "thingioResourceMgmt",
+				"contents": "%thingio.empty.content%",
+				"when": "workbenchState == empty"
+			}
+		],
+		"configuration": {
+			"title": "ThingioStudio",
+			"type": "object",
+			"properties": {
+				"thingioStudio.common.thingioSdkPath": {
+					"description": "%thingio.settings.thingioSdkPath.desc%",
+					"type": "string",
+					"default": "${userRoot}/.thingio/SDK",
+					"markdownDescription": "%thingio.settings.thingioSdkPath.markdownDesc%"
+				},
+				"thingioStudio.common.defaultProjectPath": {
+					"description": "%thingio.settings.defaultProjectPath.desc%",
+					"type": "string",
+					"default": "${userRoot}/Documents/ThingioStudio/Projects",
+					"markdownDescription": "%thingio.settings.defaultProjectPath.markdownDesc%"
+				},
+				"thingioStudio.common.compiler": {
+					"description": "%thingio.settings.compiler.desc%",
+					"type": "string",
+					"default": "SCons",
+					"enum": [
+						"SCons",
+						"GCC",
+						"Build"
+					],
+					"enumDescriptions": [
+						"A compiler named Scons",
+						"A compiler named GCC",
+						"A compiler named Build"
+					],
+					"markdownDescription": "%thingio.settings.compiler.markdownDesc%"
+				},
+				"thingioStudio.common.isShowWelcomePage": {
+					"type": "boolean",
+					"default": true,
+					"description": "Showing Welcome at startup"
+				}
+			}
+		},
+		"commands": [
+			{
+				"command": "thingIOStudio.helloWorld",
+				"title": "%thingio.helloWorld.message%"
+			},
+			{
+				"command": "thingIOStudio.showHome",
+				"title": "%thingio.label.newProject%",
+				"category": "Quick Access"
+			},
+			{
+				"command": "thingIOStudio.sdkManager",
+				"title": "%thingio.label.sdkManager%",
+				"category": "Quick Access"
+			},
+			{
+				"command": "thingIOStudio.showWelcomePage",
+				"title": "%thingio.label.showWelcomePage%"
+			},
+			{
+				"command": "thingIOStudio.getCurrentPath",
+				"title": "%thingio.label.getCurrentPath%"
+			},
+			{
+				"command": "thingIOStudio.testEditorCommand",
+				"title": "%thingio.label.testEditorCommand%"
+			},
+			{
+				"command": "thingIOStudio.refreshDir",
+				"title": "%thingio.label.refreshDir%",
+				"icon": "media/refresh.png"
+			},
+			{
+				"command": "thingIOStudio.build",
+				"title": "%thingio.label.build%",
+				"icon": "media/build.png"
+			},
+			{
+				"command": "thingIOStudio.upload",
+				"title": "%thingio.label.upload%",
+				"icon": "media/upload.png"
+			},
+			{
+				"command": "thingIOStudio.debug",
+				"title": "%thingio.label.debug%",
+				"icon": "media/debug.png"
+			},
+			{
+				"command": "thingIOStudio.rebuild",
+				"title": "%thingio.label.rebuild%"
+			},
+			{
+				"command": "thingIOStudio.clean",
+				"title": "%thingio.label.clean%"
+			},
+			{
+				"command": "thingIOStudio.run",
+				"title": "%thingio.label.run%"
+			},
+			{
+				"command": "thingIOStudio.serialPortMonitor",
+				"title": "%thingio.label.serialPortMonitor%"
+			},
+			{
+				"command": "thingIOStudio.codeCheck",
+				"title": "%thingio.label.codeCheck%"
+			},
+			{
+				"command": "thingIOStudio.generateWiki",
+				"title": "%thingio.label.generateWiki%"
+			},
+			{
+				"command": "thingIOStudio.extensionOpreation",
+				"title": "%thingio.label.extensionOperation%"
+			},
+			{
+				"command": "thingIOStudio.setAsActive",
+				"title": "%thingio.label.setAsActive%"
+			},
+			{
+				"command": "thingIOStudio.projectProperty",
+				"title": "%thingio.label.projectProperty%",
+				"category": "Quick Access"
+			},
+			{
+				"command": "thingIOStudio.compile",
+				"title": "%thingio.label.compile%"
+			},
+			{
+				"command": "thingIOStudio.exclude",
+				"title": "%thingio.label.exclude%"
+			},
+			{
+				"command": "thingIOStudio.unexclude",
+				"title": "%thingio.label.unexclude%"
+			},
+			{
+				"command": "thingIOStudio.showMemory",
+				"title": "%thingio.label.showMemory%",
+				"icon": "media/refresh.png"
+			},
+			{
+				"category": "ThingIO Debug",
+				"command": "thingio-debug.peripherals.updateNode",
+				"title": "Update Value"
+			},
+			{
+				"category": "ThingIO Debug",
+				"command": "thingio-debug.peripherals.selectedNode",
+				"title": "Selected"
+			},
+			{
+				"category": "ThingIO Debug",
+				"command": "thingio-debug.peripherals.copyValue",
+				"title": "Copy Value"
+			},
+			{
+				"category": "ThingIO Debug",
+				"command": "thingio-debug.peripherals.setFormat",
+				"title": "Set Value Format"
+			},
+			{
+				"category": "ThingIO Debug",
+				"command": "thingio-debug.registers.selectedNode",
+				"title": "Selected"
+			},
+			{
+				"category": "ThingIO Debug",
+				"command": "thingio-debug.registers.copyValue",
+				"title": "Copy Value"
+			},
+			{
+				"category": "ThingIO Debug",
+				"command": "thingio-debug.registers.setFormat",
+				"title": "Set Value Format"
+			},
+			{
+				"category": "ThingIO Debug",
+				"command": "thingio-debug.memory.deleteHistoryItem",
+				"title": "Delete"
+			},
+			{
+				"category": "ThingIO Debug",
+				"command": "thingio-debug.memory.clearHistory",
+				"title": "Clear Memory View History",
+				"icon": {
+					"light": "media/closeall.svg",
+					"dark": "media/closeall-inverse.svg"
+				}
+			},
+			{
+				"category": "ThingIO Debug",
+				"command": "thingio-debug.examineMemory",
+				"title": " View Memory",
+				"icon": {
+					"light": "media/add.svg",
+					"dark": "media/add-inverse.svg"
+				}
+			},
+			{
+				"category": "ThingIO Debug",
+				"command": "thingio-debug.viewDisassembly",
+				"title": "View Disassembly (Function)"
+			},
+			{
+				"category": "ThingIO Debug",
+				"command": "thingio-debug.setForceDisassembly",
+				"title": "Set Force Disassembly"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "thingIOStudio.build",
+				"key": "ctrl+b",
+				"mac": "cmd+b",
+				"when": "view == thingioResourceMgmt"
+			},
+			{
+				"command": "thingIOStudio.debug",
+				"key": "f5",
+				"mac": "f5",
+				"when": "view == thingioResourceMgmt"
+			},
+			{
+				"command": "thingIOStudio.run",
+				"key": "ctrl+f5",
+				"mac": "cmd+f5",
+				"when": "view == thingioResourceMgmt"
+			},
+			{
+				"command": "thingIOStudio.projectProperty",
+				"key": "alt+enter",
+				"mac": "alt+enter",
+				"when": "view == thingioResourceMgmt"
+			}
+		],
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "thingio-debug.examineMemory",
+					"when": "debugType == thingio-debug"
+				},
+				{
+					"command": "thingio-debug.memory.clearHistory",
+					"when": "debugType == thingio-debug"
+				},
+				{
+					"command": "thingio-debug.viewDisassembly",
+					"when": "debugType == thingio-debug"
+				},
+				{
+					"command": "thingio-debug.setForceDisassembly",
+					"when": "debugType == thingio-debug"
+				}
+			],
+			"editor/context": [
+				{
+					"command": "thingIOStudio.helloWorld",
+					"when": "editorTextFocus",
+					"group": "navigation"
+				},
+				{
+					"command": "thingIOStudio.getCurrentPath",
+					"when": "editorTextFocus",
+					"group": "navigation"
+				}
+			],
+			"explorer/context": [
+				{
+					"command": "thingIOStudio.getCurrentPath",
+					"group": "navigation"
+				}
+			],
+			"view/title": [
+				{
+					"command": "thingIOStudio.refreshDir",
+					"group": "navigation",
+					"when": "view == thingioResourceMgmt"
+				},
+				{
+					"command": "thingIOStudio.showMemory",
+					"group": "navigation",
+					"when": "view == thingioDebugMemory"
+				},
+				{
+					"command": "thingio-debug.examineMemory",
+					"when": "debugType == thingio-debug && view == thingio-debug.memory",
+					"group": "navigation"
+				},
+				{
+					"command": "thingio-debug.memory.clearHistory",
+					"when": "debugType == thingio-debug && view == thingio-debug.memory",
+					"group": "navigation"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "thingIOStudio.build",
+					"group": "inline",
+					"when": "view == thingioResourceMgmt && viewItem == projectNode"
+				},
+				{
+					"command": "thingIOStudio.upload",
+					"group": "inline",
+					"when": "view == thingioResourceMgmt && viewItem == projectNode"
+				},
+				{
+					"command": "thingIOStudio.debug",
+					"group": "inline",
+					"when": "view == thingioResourceMgmt && viewItem == projectNode"
+				},
+				{
+					"command": "thingIOStudio.build",
+					"group": "navigation@1",
+					"when": "view == thingioResourceMgmt && viewItem == projectNode"
+				},
+				{
+					"command": "thingIOStudio.rebuild",
+					"group": "navigation@2",
+					"when": "view == thingioResourceMgmt && viewItem == projectNode"
+				},
+				{
+					"command": "thingIOStudio.clean",
+					"group": "navigation@3",
+					"when": "view == thingioResourceMgmt && viewItem == projectNode"
+				},
+				{
+					"command": "thingIOStudio.upload",
+					"group": "navigation@4",
+					"when": "view == thingioResourceMgmt && viewItem == projectNode"
+				},
+				{
+					"command": "thingIOStudio.debug",
+					"group": "navigation@5",
+					"when": "view == thingioResourceMgmt && viewItem == projectNode"
+				},
+				{
+					"command": "thingIOStudio.run",
+					"group": "navigation@6",
+					"when": "view == thingioResourceMgmt && viewItem == projectNode"
+				},
+				{
+					"command": "thingIOStudio.serialPortMonitor",
+					"when": "view == thingioResourceMgmt && viewItem == projectNode",
+					"group": "cutcopypaste@1"
+				},
+				{
+					"command": "thingIOStudio.codeCheck",
+					"when": "view == thingioResourceMgmt && viewItem == projectNode",
+					"group": "cutcopypaste@2"
+				},
+				{
+					"command": "thingIOStudio.generateWiki",
+					"when": "view == thingioResourceMgmt && viewItem == projectNode",
+					"group": "cutcopypaste@3"
+				},
+				{
+					"command": "thingIOStudio.extensionOpreation",
+					"when": "view == thingioResourceMgmt && viewItem == projectNode",
+					"group": "cutcopypaste@4"
+				},
+				{
+					"command": "thingIOStudio.setAsActive",
+					"when": "view == thingioResourceMgmt && viewItem == projectNode"
+				},
+				{
+					"command": "thingIOStudio.projectProperty",
+					"when": "view == thingioResourceMgmt && viewItem == projectNode"
+				},
+				{
+					"command": "thingIOStudio.compile",
+					"when": "view == thingioResourceMgmt && viewItem == dictNode"
+				},
+				{
+					"command": "thingIOStudio.exclude",
+					"when": "view == thingioResourceMgmt && viewItem == dictNode"
+				},
+				{
+					"command": "thingio-debug.peripherals.updateNode",
+					"when": "view == thingio-debug.peripherals && viewItem == field"
+				},
+				{
+					"command": "thingio-debug.peripherals.updateNode",
+					"when": "view == thingio-debug.peripherals && viewItem == registerRW"
+				},
+				{
+					"command": "thingio-debug.peripherals.updateNode",
+					"when": "view == thingio-debug.peripherals && viewItem == registerWO"
+				},
+				{
+					"command": "thingio-debug.peripherals.copyValue",
+					"when": "view == thingio-debug.peripherals && viewItem == field"
+				},
+				{
+					"command": "thingio-debug.peripherals.copyValue",
+					"when": "view == thingio-debug.peripherals && viewItem == registerRW"
+				},
+				{
+					"command": "thingio-debug.peripherals.copyValue",
+					"when": "view == thingio-debug.peripherals && viewItem == registerRO"
+				},
+				{
+					"command": "thingio-debug.registers.copyValue",
+					"when": "view == thingio-debug.registers && viewItem == register"
+				},
+				{
+					"command": "thingio-debug.registers.copyValue",
+					"when": "view == thingio-debug.registers && viewItem == field"
+				},
+				{
+					"command": "thingio-debug.peripherals.setFormat",
+					"when": "view == thingio-debug.peripherals"
+				},
+				{
+					"command": "thingio-debug.registers.setFormat",
+					"when": "view == thingio-debug.registers"
+				},
+				{
+					"command": "thingio-debug.memory.deleteHistoryItem",
+					"when": "view == thingio-debug.memory",
+					"group": "inline"
+				}
+			]
+		},
+		"views": {
+			"thingioEntry": [
+				{
+					"id": "thingioResourceMgmt",
+					"name": "%thingio.view.resource.allProject%"
+				},
+				{
+					"id": "thingioQuickAccess",
+					"name": "%thingio.view.resource.quickAccess%"
+				}
+			],
+			"thingioSerialMonitor": [
+				{
+					"id": "thingioSerial",
+					"name": "%thingio.label.serialMonitor%"
+				}
+			],
+			"debug": [
+				{
+					"id": "thingio-debug.memory",
+					"name": "%thingio.debug.view.memory%"
+				},
+				{
+					"id": "thingio-debug.registers",
+					"name": "%thingio.debug.view.register%"
+				},
+				{
+					"id": "thingio-debug.peripherals",
+					"name": "%thingio.debug.view.external%"
+				},
+				{
+					"id": "thingio-debug.disassembly",
+					"name": "%thingio.debug.view.disassembly%"
+				}
+			]
+		},
+		"customEditors": [
+			{
+				"viewType": "thingioPreview",
+				"displayName": "DBGASM",
+				"selector": [
+					{
+						"filenamePattern": "*.dbgasm"
+					}
+				],
+				"priority": "default"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "yarn run package",
+		"compile": "webpack",
+		"watch": "webpack --watch",
+		"package": "webpack --mode production --devtool hidden-source-map",
+		"compile-tests": "tsc -p . --outDir out",
+		"watch-tests": "tsc -p . -w --outDir out",
+		"pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js",
+		"commit": "git-cz"
+	},
+	"devDependencies": {
+		"@types/fs-extra": "^9.0.13",
+		"@types/glob": "^7.2.0",
+		"@types/lodash": "^4.14.191",
+		"@types/mocha": "^9.1.1",
+		"@types/nkzq__copy-paste": "^2.0.0",
+		"@types/node": "16.x",
+		"@types/vscode": "^1.69.0",
+		"@typescript-eslint/eslint-plugin": "^5.30.0",
+		"@typescript-eslint/parser": "^5.30.0",
+		"@vscode/test-electron": "^2.1.5",
+		"eslint": "^8.18.0",
+		"git-cz": "^4.9.0",
+		"glob": "^8.0.3",
+		"mocha": "^10.0.0",
+		"ts-loader": "^9.3.1",
+		"typescript": "^4.7.4",
+		"vscode-debugprotocol": "^1.51.0",
+		"webpack": "^5.73.0",
+		"webpack-cli": "^4.10.0"
+	},
+	"dependencies": {
+		"@grpc/grpc-js": "^1.7.1",
+		"@grpc/proto-loader": "^0.7.3",
+		"@nkzq/copy-paste": "^2.0.1",
+		"fs-extra": "^10.1.0",
+		"lodash": "^4.17.21",
+		"platformio-vscode-debug": "^1.4.1",
+		"thingio-message-helper": "^1.1.2"
+	},
+	"__metadata": {
+		"isApplicationScoped": false,
+		"installedTimestamp": 1670996883746
+	}
+}

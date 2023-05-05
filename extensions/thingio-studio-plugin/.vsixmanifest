@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+		<Metadata>
+			<Identity Language="en-US" Id="thingio-studio" Version="0.0.1-alpha.0" Publisher="changhongThingIO" />
+			<DisplayName>thingIOStudio</DisplayName>
+			<Description xml:space="preserve">The embedded studio for the RISC-V chip development.</Description>
+			<Tags>vscode,plugin,thingio,keybindings,debuggers,thingio-debug.disassembly,Disassembly,__ext_dbgasm,thingio-debug.memoryview,Memory,__ext_dbgmem,thingio-debug.asm,Assembly,asm,__ext_asm,__ext_nasm,__ext_yasm,__ext_inc,__ext_s</Tags>
+			<Categories>Other</Categories>
+			<GalleryFlags>Public</GalleryFlags>
+			
+			<Properties>
+				<Property Id="Microsoft.VisualStudio.Code.Engine" Value="^1.69.0" />
+				<Property Id="Microsoft.VisualStudio.Code.ExtensionDependencies" Value="" />
+				<Property Id="Microsoft.VisualStudio.Code.ExtensionPack" Value="" />
+				<Property Id="Microsoft.VisualStudio.Code.ExtensionKind" Value="workspace" />
+				<Property Id="Microsoft.VisualStudio.Code.LocalizedLanguages" Value="" />
+				
+				
+				<Property Id="Microsoft.VisualStudio.Services.Links.Source" Value="https://code.changhong.com/baiqiao.shu/thingio-plugin-main.git" />
+				<Property Id="Microsoft.VisualStudio.Services.Links.Getstarted" Value="https://code.changhong.com/baiqiao.shu/thingio-plugin-main.git" />
+				<Property Id="Microsoft.VisualStudio.Services.Links.Repository" Value="https://code.changhong.com/baiqiao.shu/thingio-plugin-main.git" />
+				
+				
+				
+				
+				<Property Id="Microsoft.VisualStudio.Services.GitHubFlavoredMarkdown" Value="true" />
+				<Property Id="Microsoft.VisualStudio.Services.Content.Pricing" Value="Free"/>
+
+				
+				
+			</Properties>
+			<License>extension/LICENSE.txt</License>
+			
+		</Metadata>
+		<Installation>
+			<InstallationTarget Id="Microsoft.VisualStudio.Code"/>
+		</Installation>
+		<Dependencies/>
+		<Assets>
+			<Asset Type="Microsoft.VisualStudio.Code.Manifest" Path="extension/package.json" Addressable="true" />
+			<Asset Type="Microsoft.VisualStudio.Services.Content.Details" Path="extension/README.md" Addressable="true" />
+<Asset Type="Microsoft.VisualStudio.Services.Content.Changelog" Path="extension/CHANGELOG.md" Addressable="true" />
+<Asset Type="Microsoft.VisualStudio.Services.Content.License" Path="extension/LICENSE.txt" Addressable="true" />
+		</Assets>
+	</PackageManifest>

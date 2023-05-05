@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="../media/welcome.png">
+  <title>欢迎使用</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+    .vscode-dark {
+      background: rgb(30, 30, 30);
+    }
+
+    .vscode-dark .column-right li button {
+      background: #252526;
+    }
+
+    .vscode-dark {
+      color: #ccc;
+    }
+
+    .body-container {
+      padding: 8vw 10vw;
+    }
+
+    .body-container .product-name {
+      padding: 5px 0 0;
+      margin: 0;
+      border: none;
+      font-weight: 400;
+      font-size: 2.7em;
+      white-space: nowrap;
+    }
+
+    .body-container .subtitle {
+      color: rgba(204, 204, 204, 0.7);
+      margin-top: 0.6em;
+      font-size: 2em;
+      display: block;
+    }
+
+    .main-container {
+      display: flex;
+      height: 70vh;
+    }
+
+    .main-container div {
+      flex: 1;
+    }
+
+    .main-container h2 {
+      font-weight: 200;
+      margin-top: 0;
+      margin-bottom: 5px;
+      font-size: 1.5em;
+      line-height: normal;
+    }
+
+    button {
+      color: #3794ff;
+      padding: 0;
+      background: transparent;
+      margin: 2px;
+      cursor: pointer;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      border: none;
+      text-align: left;
+      font-size: 13px;
+      font-family: inherit;
+    }
+
+    ul {
+      padding-left: 0;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    button i {
+      margin-left: 0;
+      margin-right: 0.5em;
+      display: inline-block;
+    }
+
+    .main-content {
+      font-size: 14px;
+      font-weight: 500;
+      text-align: left;
+      display: inline-block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .column-right li button {
+      background: #f3f3f3;
+      border-radius: 6px;
+      padding: 8px;
+      width: 100%;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="body-container">
+    <header>
+      <h1 class="product-name">Thingio Studio</h1>
+    <p class="subtitle description">编辑进化</p>
+    </header>
+    <div class="main-container">
+      <div class="column-left">
+        <div class="start-container">
+          <h2>启动</h2>
+          <div class="scroll-container">
+            <ul>
+              <li>
+                <button title="打开新的无标题文件、笔记本或自定义编辑器。 (⌃⌥⌘N)">
+                  <i class="glyphicon glyphicon-file"></i>
+                  新建文件
+                </button>
+              </li>
+              <li>
+                <button title="打开文件或文件夹以开始工作 (⌘O)">
+                  <i class="glyphicon glyphicon-folder-open"></i>
+                  打开
+                </button>
+              </li>
+              <li>
+                <button title="将远程仓库克隆到本地文件夹">
+                  <i class="glyphicon glyphicon-download-alt"></i>
+                  克隆 Git 仓库
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="column-right">
+        <div class="workthrough-container">
+          <h2>演练</h2>
+          <div class="scroll-container text-center">
+            <ul>
+              <li>
+                <button title="发现最佳的自定义方法，使用你的专属 Thingio Studio">
+                  <div class="main-content">
+                    开始使用 Thingio Studio
+                  </div>
+                  <div class="desc-content">
+                    发现最佳的自定义方法，使用你的专属 Thingio Studio
+                  </div>
+                </button>
+              </li>
+              <li>
+                <button title="直接跳转到 Thingio Studio 并概要了解必备功能">
+                  <div class="main-content">
+                    了解基础知识
+                  </div>
+                  <div class="desc-content">
+                    直接跳转到 Thingio Studio 并概要了解必备功能
+                  </div>
+                </button>
+              </li>
+            </ul>
+            <button>
+              <span>更多...</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="text-center">
+      <input type="checkbox" name="showFirst" id="showWelcome" />
+      <label for="showFirst">启动时显示欢迎页</label>
+    </footer>
+  </div>
+</body>
+<script>
+  const vscode = acquireVsCodeApi();
+
+  document.getElementById('showWelcome').addEventListener('change', function (ev) {
+    vscode.postMessage({ command: 'changeShowWelcome', value: ev.currentTarget.checked });
+  });
+
+  window.addEventListener('message', message => {
+    document.getElementById('showWelcome').checked = message.data.value;
+  });
+</script>
+</html>

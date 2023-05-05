@@ -1,0 +1,12 @@
+0x080036ec 08 b5        push  {r3, lr}
+0x080036ee 01 02        movs  r1, #1
+0x080036f0 10 20        movs  r0, #16
+0x080036f2 08 b5 08 b5  push  {r3, lr}
+0x080036f6 08 b5 08 b5  push  {r3, lr}
+0x080036fa 08 b5 08 b5  push  {r3, lr}
+0x080036fe 08 b5 08 b5  push  {r3, lr}
+0x08003700 08 b5 08 b5  push  {r3, lr}
+0x08003702 08 b5 08 b5  push  {r3, lr}
+0x08003706 08 b5 08 b5  push  {r3, lr}
+0x08003708 08 b5 08 b5  push  {r3, lr}
+0x0800370c 08 b5 08 b5  push  {r3, lr}

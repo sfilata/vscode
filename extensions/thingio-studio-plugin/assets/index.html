@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ThingIO Home</title>
+  <!-- Message Transfer -->
+  <script src="https://unpkg.com/thingio-message-helper@1.0.3/dist/index.umd.js"></script>
+  <script>
+    platfromMessageHelper.initVscodeIframe();
+  </script>
+  <!-- Message Transfer End -->
+</head>
+
+<body>
+  <iframe id="home" name="home" src="{{ route }}" width="100%" height="100%" frameborder="0"
+    style="border: 0; left: 0; right: 0; bottom: 0; top: 0; position:absolute;" />
+</body>
+
+</html>
